@@ -40,7 +40,8 @@ function AutoPXLS(images){
   uiPanel.id = "uiPanel";
   uiPanel.style.right = 0;
   uiPanel.style.position = "absolute";
-  document.body.append(uiPanel);
+  //document.body.append(uiPanel); - doesn't work in Microsoft Edge for some reason...
+  $(uiPanel).appendTo(document.body);
 
   var uiSound = document.createElement('div');
   uiSound.id = "uiSound";
@@ -56,7 +57,8 @@ function AutoPXLS(images){
   	uiSound.innerHTML = document.captchaSoundAlert ? "🔊" : "🔇";
   	console.log("[captcha notification sound " + (document.captchaSoundAlert ? 'unmuted]' : "muted]"));
   }
-  uiPanel.append(uiSound);
+  //uiPanel.append(uiSound);
+  $(uiPanel).append(uiSound);
   
   var uiMode = document.createElement('div');
       uiMode.id = "uiMode";
@@ -73,7 +75,8 @@ function AutoPXLS(images){
   	  uiMode.innerHTML = document.classic ? "⇢" : "⇝";
   	  console.log((document.classic ? "[linear" : "[random") + " pixels placing mode]");
   }
-  uiPanel.append(uiMode); //
+  //uiPanel.append(uiMode);
+  $(uiPanel).append(uiMode);
   
   var uiSettings = document.createElement('div');
       uiSettings.id = "uiSettings";
@@ -88,7 +91,8 @@ function AutoPXLS(images){
       uiSettings.onclick = function () {
   	  alert('For full list of settings, have a look here: https://github.com/p0358/autopxls');
   }
-  uiPanel.append(uiSettings);
+  //uiPanel.append(uiSettings);
+  $(uiPanel).append(uiSettings);
   // ===
   
   function changeFavicon(href) {
