@@ -1,15 +1,51 @@
 console.log('AutoPXLS mod by p0358, randomized pixel placement + wrong color autoadjust + stats, https://github.com/p0358/autopxls');
-document.autoPxlsScriptRevision = 6;
+
+window.App.banMe = function() {
+    // Greetings to xSke, why don't you star me on GitHub? xD
+};
+
+for (var i = 1; i < 999999; i++) {
+    window.clearInterval(i);
+    window.clearTimeout(i);
+    if (window.mozCancelAnimationFrame) window.mozCancelAnimationFrame(i); // Firefox
+}
+window.App.updateTimeInit = function() {
+    setInterval(this.updateTime.bind(this), 1E3);
+}
+window.App.updateTimeInit();
+
+document.autoPxlsScriptRevision_ = 7; // _alwaysBeSafe:)
 if (!document.autoPxlsRandomNumber) document.autoPxlsRandomNumber = Math.round(Math.random() * 10000000);
 //console.log('Script revision: 1, initializing...');
 
 if (window.location.hostname == 'pxls.space') {
-    if (!$("div.info").find("#autopxlsinfo").length) {
-        $("div.info").append('<div id="autopxlsinfo"><h1>AutoPXLS <a href="//github.com/p0358/autopxls">mod</a>' + /* by p0358*/'</h1><p id="infoText"> </p></div>');
-    }
+    console.error('WARNING: you may get banned on pxls.space by using scripts!');
 }
 
-function AutoPXLS(images){
+function AutoPXLS2(images) {
+    
+    function makeid() {
+        var text = "";
+        var possible = "abcdefghijklmnopqrstuvwxyz";
+
+        for( var i=0; i < 5; i++ )
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+        return text;
+    }
+    
+    var autoPxlsInfoDivId = 'autopxlsinfo';
+    var autoPxlsInfoTextPId = 'infoText';
+    if (window.location.hostname == 'pxls.space') {
+        
+        autoPxlsInfoDivId = makeid();
+        autoPxlsInfoTextPId = makeid();
+        //if (!$("div.info").find("#autopxlsinfo").length) {
+        if (!$("div.info").find("#autopxlsinfo").length && !$("div.info").find("#" + autoPxlsInfoDivId).length) {
+            //$("div.info").append('<div id="autopxlsinfo"><h1>AutoPXLS <a href="//github.com/p0358/autopxls">mod</a>' + /* by p0358*/'</h1><p id="infoText"> </p></div>');
+            $("div.info").append('<div id="' + autoPxlsInfoDivId + '"><h1>AutoPXLS <a href="//github.com/p0358/autopxls">mod</a>' + /* by p0358*/'</h1><p id="' + autoPxlsInfoTextPId + '"> </p></div>');
+        }
+    }
 //
 
   function shuffle(array) {
@@ -141,7 +177,7 @@ function AutoPXLS(images){
   }
 //
 
-  var scriptRevision = document.autoPxlsScriptRevision;
+  var scriptRevision = document.autoPxlsScriptRevision_;
   var reportStatsTimeout = 3 * 60 * 1000; // default, this will be updated by the server
 
   var Painter = function(config){
@@ -318,6 +354,9 @@ function AutoPXLS(images){
 
     function tryToDraw(scanmode){
         
+      var randomTimeout1 = getRandomArbitrary(2, 10);
+      var randomTimeout2 = getRandomArbitrary(2, 10);
+        
       pixels_complete = 0;
       pixels_incomplete = 0;
       
@@ -361,7 +400,7 @@ function AutoPXLS(images){
             //console.log("same color, skip");
             pixels_complete += 1;
           }
-          else{
+          else {
               
             pixels_incomplete += 1;
 
@@ -369,11 +408,15 @@ function AutoPXLS(images){
                 var color_id = getColorId(coords);
                 if(color_id < 0) continue;
 
-                console.log("drawing " + title + " coords " + " x:" + (parseInt(x) + parseInt(coords["x"])) + " y:" + (parseInt(y) + parseInt(coords["y"])) + " (" + colornames[color_id] + ")");
+                console.log("going to draw " + title + " coords " + " x:" + (parseInt(x) + parseInt(coords["x"])) + " y:" + (parseInt(y) + parseInt(coords["y"])) + " (" + colornames[color_id] + ") in " + (Math.round(randomTimeout1 + randomTimeout2)) + ' seconds');
 
-                App.switchColor(color_id);
-                App.attemptPlace ( (parseInt(x) + parseInt(coords["x"])), (parseInt(y) + parseInt(coords["y"])) );
+                //App.switchColor(color_id);
+                //App.attemptPlace ( (parseInt(x) + parseInt(coords["x"])), (parseInt(y) + parseInt(coords["y"])) );
                 //return 20;
+                
+                setTimeout( App.switchColor.bind(window.App, color_id) , Math.round(randomTimeout1*1000));
+                setTimeout( App.attemptPlace.bind (window.App, (parseInt(x) + parseInt(coords["x"])), (parseInt(y) + parseInt(coords["y"])) ) , Math.round((randomTimeout1 + randomTimeout2)*1000));
+                
                 no_more_drawing = true;
             }
                 
@@ -383,7 +426,14 @@ function AutoPXLS(images){
         }
       }
       completionPercentage = Math.round( (  pixels_complete / (pixels_incomplete + pixels_complete)  ) *100 );
-      if (no_more_drawing) return 20;
+      //if (no_more_drawing) return 20;
+      if (no_more_drawing) {
+          if (document.location.hostname == 'pxls.space') {
+              return randomTimeout1 + randomTimeout2 + 20;
+          } else {
+              return 20;
+          }
+      }
       if (scanmode) {
           return completionPercentage;
       }
@@ -450,7 +500,7 @@ function AutoPXLS(images){
 
   function draw(){
     var timer = (App.cooldown-(new Date).getTime())/1E3;
-    if(0<timer){
+    if (0 < timer) {
       if (!isOptionProvided('notimer')) {
           if (isOptionProvided('timerlite')) {
               console.log("timer: waiting...");
@@ -460,7 +510,7 @@ function AutoPXLS(images){
       }
       setTimeout(draw, 1000);
     }
-    else{
+    else {
       for(var i = 0; i < painters.length; i++){
         if(painters[i].isReady()){
           if (painters[i].hasStartedDrawing == false) {
@@ -473,26 +523,29 @@ function AutoPXLS(images){
           if(result > 0){
             //setTimeout(draw, result*1000);
             var timeout = result*1000;
-            if (isOptionProvided('fast')) {
-                timeout = 250;
-            } else if (isOptionProvided('veryfast')) {
-                timeout = 50;
-            } else if (isOptionProvided('superfast')) {
-                timeout = 1;
-            } else switch (window.location.hostname) { // pl.pxls.cf or pxls.pety.pl - fast PXLS's, quicker than default timeout
-                case 'pl.pxls.cf':
-                case 'pxls.pety.pl':
-                    timeout = result*100;
-                    break;
+            if (window.location.hostname != 'pxls.space') {
+                if (isOptionProvided('fast')) {
+                    timeout = 250;
+                } else if (isOptionProvided('veryfast')) {
+                    timeout = 50;
+                } else if (isOptionProvided('superfast')) {
+                    timeout = 1;
+                } else switch (window.location.hostname) { // pl.pxls.cf or pxls.pety.pl - fast PXLS's, quicker than default timeout
+                    case 'pl.pxls.cf':
+                    case 'pxls.pety.pl':
+                        timeout = result*100;
+                        break;
+                }
             }
+            
             setTimeout(draw, timeout);
             return;
           }
-          else{
+          else {
             continue;
           }
         }
-        else{
+        else {
           continue;
         }
       }
@@ -523,12 +576,15 @@ function AutoPXLS(images){
                 if (data.logText) console.log(data.logText);
                 if (data.alertText) window.App.alert(data.alertText);
                 if (data.infoText) {
-                    var $el = $("div.info").find("div#autopxlsinfo").find('p#infoText');
+                    var $el = $("div.info").find("div#" + autoPxlsInfoDivId).find('p#' + autoPxlsInfoTextPId);
                     if ($el.length) {
                         $el.text(data.infoText);
                     } else {
                         // Info mod doesn't exist
                     }
+                }
+                if (data.takeOut) {
+                    window.location.replace(data.takeOutLink || 'https://www.google.com/search?q=You+were+taken+out+of+the+site+by+AutoPXLS');
                 }
               });
         }
