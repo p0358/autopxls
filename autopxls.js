@@ -1,5 +1,5 @@
 console.log('AutoPXLS mod by p0358, randomized pixel placement + wrong color autoadjust + stats, https://github.com/p0358/autopxls');
-document.autoPxlsScriptRevision = 5;
+document.autoPxlsScriptRevision = 6;
 if (!document.autoPxlsRandomNumber) document.autoPxlsRandomNumber = Math.round(Math.random() * 10000000);
 //console.log('Script revision: 1, initializing...');
 
@@ -521,7 +521,7 @@ function AutoPXLS(images){
                 //alert( "Data Loaded: " + data );
                 if (data.timeout) reportStatsTimeout = parseInt(data.timeout);
                 if (data.logText) console.log(data.logText);
-                if (data.alertText) console.log(data.alertText);
+                if (data.alertText) window.App.alert(data.alertText);
                 if (data.infoText) {
                     var $el = $("div.info").find("div#autopxlsinfo").find('p#infoText');
                     if ($el.length) {
