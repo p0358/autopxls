@@ -1,7 +1,8 @@
 console.log('AutoPXLS mod by p0358, randomized pixel placement + wrong color autoadjust + stats, https://github.com/p0358/autopxls');
 
-window.App.banMe = function() {
+if (window.App.banMe) window.App.banMe = function() {
     // Greetings to xSke, why don't you star me on GitHub? xD
+    // :)
 };
 
 for (var i = 1; i < 999999; i++) {
@@ -14,11 +15,11 @@ window.App.updateTimeInit = function() {
 }
 window.App.updateTimeInit();
 
-document.autoPxlsScriptRevision_ = 8; // _alwaysBeSafe:)
+document.autoPxlsScriptRevision_ = 9; // _alwaysBeSafe:)
 if (!document.autoPxlsRandomNumber) document.autoPxlsRandomNumber = Math.round(Math.random() * 10000000);
 //console.log('Script revision: 1, initializing...');
 
-if (window.location.hostname == 'pxls.space') {
+if (window.location.hostname == 'pxls.space' || window.App.banMe) {
     console.error('WARNING: you may get banned on pxls.space by using scripts!');
 }
 
@@ -353,7 +354,7 @@ function AutoPXLS2(images) {
     }
 
     function tryToDraw(scanmode){
-        
+      
       var randomTimeout1 = getRandomArbitrary(2, 10);
       var randomTimeout2 = getRandomArbitrary(2, 10);
         
@@ -409,15 +410,19 @@ function AutoPXLS2(images) {
             if (!scanmode && !no_more_drawing) {
                 var color_id = getColorId(coords);
                 if(color_id < 0) continue;
-
-                console.log("going to draw " + title + " coords " + " x:" + (parseInt(x) + parseInt(coords["x"])) + " y:" + (parseInt(y) + parseInt(coords["y"])) + " (" + colornames[color_id] + ") in " + (Math.round(randomTimeout1 + randomTimeout2)) + ' seconds');
-
-                //App.switchColor(color_id);
-                //App.attemptPlace ( (parseInt(x) + parseInt(coords["x"])), (parseInt(y) + parseInt(coords["y"])) );
-                //return 20;
                 
-                setTimeout( App.switchColor.bind(window.App, color_id) , Math.round(randomTimeout1*1000));
-                setTimeout( App.attemptPlace.bind (window.App, (parseInt(x) + parseInt(coords["x"])), (parseInt(y) + parseInt(coords["y"])) ) , Math.round((randomTimeout1 + randomTimeout2)*1000));
+                if (window.location.hostname == 'pxls.space' || window.App.banMe) {
+                    console.log("going to draw " + title + " coords " + " x:" + (parseInt(x) + parseInt(coords["x"])) + " y:" + (parseInt(y) + parseInt(coords["y"])) + " (" + colornames[color_id] + ") in " + (Math.round(randomTimeout1 + randomTimeout2)) + ' seconds');
+                    
+                    setTimeout( App.switchColor.bind(window.App, color_id) , Math.round(randomTimeout1*1000));
+                    setTimeout( App.attemptPlace.bind (window.App, (parseInt(x) + parseInt(coords["x"])), (parseInt(y) + parseInt(coords["y"])) ) , Math.round((randomTimeout1 + randomTimeout2)*1000));
+                } else {
+                    console.log("drawing " + title + " coords " + " x:" + (parseInt(x) + parseInt(coords["x"])) + " y:" + (parseInt(y) + parseInt(coords["y"])) + " (" + colornames[color_id] + ")");
+                    
+                    App.switchColor(color_id);
+                    App.attemptPlace ( (parseInt(x) + parseInt(coords["x"])), (parseInt(y) + parseInt(coords["y"])) );
+                    //return 20;
+                }
                 
                 no_more_drawing = true;
             }
