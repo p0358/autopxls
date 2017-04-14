@@ -399,7 +399,9 @@ function AutoPXLS2(images) {
           
           var ispc = isSamePixelColor(coords);
 
-          if (ispc && ispc != 2) { // 2 = transparent
+          if (ispc && ispc == 2) { // 2 = transparent
+            // Don't count
+          } else if (ispc) {
             //console.log("same color, skip");
             pixels_complete += 1;
           }
