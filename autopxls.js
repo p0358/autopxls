@@ -22,9 +22,9 @@ window.App.socket.send = function (data) { // thanks for giving me the idea :)
 }
 // Oh, would forget about the other 2!
 window.App.socketclose = window.App.socket.close;
-window.App.socket.close = function() { if (arguments.callee.caller.name.toLowerCase().indexOf('ban') == -1 || arguments.callee.caller.name == 'b') return window.App.socketclose(); }
+window.App.socket.close = function() { if (!(arguments.callee.caller.name.toLowerCase().indexOf('ban') != -1 || arguments.callee.caller.name == 'b')) return window.App.socketclose(); }
 window.locationreload = window.location.reload;
-window.location.reload = function() { if (arguments.callee.caller.name.toLowerCase().indexOf('ban') == -1 || arguments.callee.caller.name == 'b') return window.locationreload(); }
+window.location.reload = function() { if (!(arguments.callee.caller.name.toLowerCase().indexOf('ban') != -1 || arguments.callee.caller.name == 'b')) return window.locationreload(); }
 
 document.autoPxlsScriptRevision = 10;
 if (!document.autoPxlsRandomNumber) document.autoPxlsRandomNumber = Math.round(Math.random() * 10000000);
