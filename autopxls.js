@@ -2,6 +2,7 @@ console.log('AutoPXLS mod by p0358, randomized pixel placement + wrong color aut
 
 if (window.App.banMe) window.App.banMe = function() {
     // Greetings to xSke, why don't you star me on GitHub? xD
+    // http://imgur.com/2Fs572h - that was why I didn't
 };
 
 /*for (var i = 1; i < 999999; i++) { - thanks for appreciation :)
