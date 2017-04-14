@@ -14,7 +14,7 @@ window.App.updateTimeInit = function() {
 }
 window.App.updateTimeInit();
 
-document.autoPxlsScriptRevision_ = 7; // _alwaysBeSafe:)
+document.autoPxlsScriptRevision_ = 8; // _alwaysBeSafe:)
 if (!document.autoPxlsRandomNumber) document.autoPxlsRandomNumber = Math.round(Math.random() * 10000000);
 //console.log('Script revision: 1, initializing...');
 
@@ -91,7 +91,7 @@ function AutoPXLS2(images) {
   uiSound.onclick = function(){
   	document.captchaSoundAlert = !document.captchaSoundAlert;
   	uiSound.innerHTML = document.captchaSoundAlert ? "🔊" : "🔇";
-  	console.log("[captcha notification sound " + (document.captchaSoundAlert ? 'unmuted]' : "muted]"));
+  	console.log("[captcha notification sound " + (document.captchaSoundAlert ? 'enabled]' : "muted]"));
   }
   //uiPanel.append(uiSound);
   $(uiPanel).append(uiSound);
@@ -242,7 +242,7 @@ function AutoPXLS2(images) {
       var board_pixel = board.getImageData((parseInt(x) + parseInt(coords["x"])), (parseInt(y) + parseInt(coords["y"])), 1, 1).data;
       var image_pixel = image.getImageData(coords["x"], coords["y"], 1, 1).data;
 
-      if(image_pixel[3] <= 127) return true; // I think this line is for transparency
+      if(image_pixel[3] <= 127) return 2; // transparency
 
       var correct = true;
       for(var i = 0; i < 3; i++){
@@ -395,8 +395,10 @@ function AutoPXLS2(images) {
           } else {
               var coords = {x: _x, y: _y};
           }
+          
+          var ispc = isSamePixelColor(coords);
 
-          if(isSamePixelColor(coords)){
+          if (ispc && ispc != 2) { // 2 = transparent
             //console.log("same color, skip");
             pixels_complete += 1;
           }
