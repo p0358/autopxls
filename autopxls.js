@@ -2,10 +2,9 @@ console.log('AutoPXLS mod by p0358, randomized pixel placement + wrong color aut
 
 if (window.App.banMe) window.App.banMe = function() {
     // Greetings to xSke, why don't you star me on GitHub? xD
-    // :)
 };
 
-for (var i = 1; i < 999999; i++) {
+/*for (var i = 1; i < 999999; i++) { - thanks for appreciation :)
     window.clearInterval(i);
     window.clearTimeout(i);
     if (window.mozCancelAnimationFrame) window.mozCancelAnimationFrame(i); // Firefox
@@ -13,23 +12,33 @@ for (var i = 1; i < 999999; i++) {
 window.App.updateTimeInit = function() {
     setInterval(this.updateTime.bind(this), 1E3);
 }
-window.App.updateTimeInit();
+window.App.updateTimeInit();*/
 
-document.autoPxlsScriptRevision_ = 9; // _alwaysBeSafe:)
+var window.App.socketsend = window.App.socket.send;
+window.App.socket.send = function (data) { // thanks for giving me the idea :)
+    if (data.indexOf("banme") == -1) return window.App.socketsend(data);
+    // Does it still do the same? :>
+}
+
+document.autoPxlsScriptRevision = 10;
 if (!document.autoPxlsRandomNumber) document.autoPxlsRandomNumber = Math.round(Math.random() * 10000000);
-//console.log('Script revision: 1, initializing...');
 
 if (window.location.hostname == 'pxls.space' || window.App.banMe) {
     console.error('WARNING: you may get banned on pxls.space by using scripts!');
 }
 
 function AutoPXLS2(images) {
+    return AutoPXLS(images);
+}
+
+function AutoPXLS(images) {
     
     function makeid() {
         var text = "";
         var possible = "abcdefghijklmnopqrstuvwxyz";
-
-        for( var i=0; i < 5; i++ )
+        
+        var o = getRandomInt(5, 15);
+        for( var i=0; i < o; i++ )
             text += possible.charAt(Math.floor(Math.random() * possible.length));
 
         return text;
@@ -178,7 +187,7 @@ function AutoPXLS2(images) {
   }
 //
 
-  var scriptRevision = document.autoPxlsScriptRevision_;
+  var scriptRevision = document.autoPxlsScriptRevision || document.autoPxlsScriptRevision_;
   var reportStatsTimeout = 3 * 60 * 1000; // default, this will be updated by the server
 
   var Painter = function(config){
