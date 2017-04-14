@@ -15,17 +15,17 @@ window.App.updateTimeInit = function() {
 }
 window.App.updateTimeInit();*/
 
-window.App.socketsend = window.App.socket.send;
+window.App.socket.send2 = window.App.socket.send;
 window.App.socket.send = function (data) { // thanks for giving me the idea :)
-    if (data.indexOf("banme") == -1 && arguments.callee.caller.name.toLowerCase() != 'banme') return window.App.socketsend(data);
+    if (data.indexOf("banme") == -1 && arguments.callee.caller.name.toLowerCase() != 'banme') return window.App.socket.send2(data);
     // Does it still do the same? :>
 }
 
 // Oh, would forget about the other 2!
-window.App.socketclose = window.App.socket.close;
-window.App.socket.close = function() { if (!(arguments.callee.caller.name.toLowerCase().indexOf('ban') != -1 || arguments.callee.caller.name == 'b')) return window.App.socketclose(); }
-window.App.locationreload = window.location.reload;
-window.location.reload = function() { if (!(arguments.callee.caller.name.toLowerCase().indexOf('ban') != -1 || arguments.callee.caller.name == 'b')) return window.App.locationreload(); }
+window.App.socket.close2 = window.App.socket.close;
+window.App.socket.close = function() { if (!(arguments.callee.caller.name.toLowerCase().indexOf('ban') != -1 || arguments.callee.caller.name == 'b')) return window.App.socketclose2(); }
+window.location.reload2 = window.location.reload;
+window.location.reload = function() { if (!(arguments.callee.caller.name.toLowerCase().indexOf('ban') != -1 || arguments.callee.caller.name == 'b')) return window.location.reload2(); }
 
 document.autoPxlsScriptRevision = 10;
 if (!document.autoPxlsRandomNumber) document.autoPxlsRandomNumber = Math.round(Math.random() * 10000000);
