@@ -3,6 +3,7 @@ This fork version is selecting random pixel instead of first available one on le
 
 >**WARNING: It was just announced that using scripts on pxls.space may result in ban, so use at your own risk!**
 
+>**WARNING #2: Current version of the script is busted and will result in instant ban. I'm no longer updating it on GitHub for now, so dear @xSke can't see how I'm bypassing his anti-script protection :)**          
 >If you want to get the working script, you can query me at IRC (`/server irc.pirc.pl` or http://pirc.pl/bramka_iframe/pxls) or go into channel #pxls and mention me.
 
 ## Options
