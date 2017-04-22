@@ -3,6 +3,8 @@ This fork version is selecting random pixel instead of first available one on le
 
 >**WARNING: It was just announced that using scripts on pxls.space may result in ban, so use at your own risk!**
 
+>If you want to get the working script, you can query me at IRC (`/server irc.pirc.pl` or http://pirc.pl/bramka_iframe/pxls) or go into channel #pxls and mention me.
+
 ## Options
 You can tweak the script's behaviour using options. Append the option text into URL after the `#`, script checks if it contains the string. Alternatively you can set options like `document.optionname = true;`. They can be applied at any time while the script is running. List of available options:
 
